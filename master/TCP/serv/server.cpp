@@ -79,8 +79,20 @@ int Server::toAccept()
 void* Server::servForPerClient(void *arg)
 {
 	//服务器要处理的过程	
-	std::cout<<"fd = "<<int(arg)<<std::endl;
+	int fd = (int)arg;
+	std::cout<<"fd = "<<fd<<std::endl;
+
 	std::cout<<"someone connected!"<<std::endl;
+	char buf[1024]={0};
+	int ret=0;
+	while((ret = read(fd,buf,sizeof(buf)))>0)
+	{
+		std::cout<<"rec msg\n------------\n"<<buf
+						  <<"------------\n"<<std::endl;
+		std::cout<<ret<<std::endl;
+	}
+	std::cout<<"客户端断开"<<std::endl;
+	
 }
 
 int Server::toServer(int clientFd)

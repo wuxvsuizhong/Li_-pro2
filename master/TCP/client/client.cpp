@@ -8,12 +8,12 @@
 
 
 Client::Client(const char *IPStr,const char *portStr)
-	:servaddr(nullptr),sockfd(0)
+	:servaddr(nullptr),sockfd(-1)
 {
 	servaddr = new struct sockaddr_in;
 	memset(servaddr,0,sizeof(*servaddr));
 	servaddr->sin_family = AF_INET;
-	inet_pton(AF_INET,IPStr,&(servaddr->sin_addr.s_addr) );
+	inet_pton(AF_INET,IPStr,&servaddr->sin_addr.s_addr);
 	servaddr->sin_port = htons(atoi(portStr));
 	if((sockfd = socket(AF_INET,SOCK_STREAM,0)) < 0)
 	{
@@ -21,7 +21,7 @@ Client::Client(const char *IPStr,const char *portStr)
 		exit(1);
 	}
 	
-	if(connect(sockfd,(const struct sockaddr *)servaddr,sizeof(servaddr)) < 0)
+	if(connect(sockfd,(const struct sockaddr *)servaddr,sizeof(*servaddr)) < 0)
 	{
 		perror("connect error ");
 		exit(1);
@@ -66,7 +66,7 @@ int Client::toWork()
 
 	pthread_t th;
 	pthread_create(&th,&attr,withTheWork,(void *)sockfd);//先给线程函数什么都不传递
-
+	while(1);//保持主线程不退出
 	pthread_attr_destroy(&attr);
 }
 
