@@ -18,3 +18,4 @@ $(TARGET):$(obj)
 clean:
 	rm -f *.o
 	rm -f $(TARGET) 
+#可用于当前文件夹下的所有.c文件的编译的Makefile
