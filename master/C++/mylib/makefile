@@ -1,16 +1,15 @@
-CC=gcc
+CC=g++
 
-SRCS=mylib.c
+SRCS=main.cpp
 
-OBJS=$(SRCS:.c=.o)
+OBJS=$(SRCS:.cpp=.o)
 
-EXEC=libmylib.so
+EXEC=myapp
 
 start:$(OBJS)
-	$(CC) -o $(EXEC) $(OBJS) -shared
-
-.c.o:
-	$(CC) -o $@ -c $< -fPIC
+	$(CC) -o $(EXEC) $(OBJS) -L. -lmylib 
+.cpp.o:
+	$(CC) -o $@ -c $<
 
 clean:
 	rm -rf $(OBJS)
