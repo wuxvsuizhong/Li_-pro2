@@ -16,12 +16,19 @@ classman::classman():gender(1)
 
 //    gender=0;
     //const修饰的成员变量不能在构造函数或者其他函数中修改或者设置初始值，必须要在构造函数定义处进行初始化成员列表
+
+    info = new char[1000]();   //加上()使其在new的同时进行空间初始化为0
+    //    一定要在析构函数中释放new出来的空间，否则会有内存泄漏
 }
 
 //构造函数可以通过形参重载
 classman::classman(const char *namestr,bool iworker):gender(1)
 {
     strcpy(name,namestr);
+    info = new char[1000]();
+    //    一定要在析构函数中释放new出来的空间，否则会有内存泄漏
+
+    strcpy(info,"there some extral info!");
 }
 
 classman::~classman()
@@ -36,6 +43,9 @@ classman::~classman()
         cout << " I'm a worker" << endl;
     else
         cout << " i'm not a worker" << endl;
+
+//    一定要在析构函数中释放new出来的空间，否则会有内存泄漏
+    delete []info;
 }
 
 void classman::set_name(const char *namestr)
@@ -56,4 +66,9 @@ const char* classman::get_name()
 const int classman::get_age()
 {
     return (const int)age;
+}
+
+char* classman::get_info()
+{
+    return info;
 }

@@ -8,6 +8,7 @@ private:
    int age;
    const bool gender;
    bool isworker;
+   char* info; //在构造函数中给其分配内存空间,在析构函数中释放其空间
 public:
    classman();
    classman(const char* namestr,bool isworker=true);  //构造函数的默认参数,默认参数在头文件.h中成员函数定义的地方设置
@@ -18,6 +19,8 @@ public:
 
    const char* get_name();
    const int get_age();
+
+   char* get_info();
 };
 
 

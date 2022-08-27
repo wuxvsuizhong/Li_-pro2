@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
 
     classman* m1= new classman("zhangsan");
     cout << m1->get_name() <<endl;
+    cout << m1->get_info() <<endl;
+
     delete m1;
     //new出来的实例必须用delete释放
 
