@@ -67,3 +67,4 @@ const bool man::get_gender() const
 {
     return gender;
 }
+
