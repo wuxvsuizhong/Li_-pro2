@@ -1,46 +1,73 @@
 #include "message.h"
+#include "cJSON.h"
 #include "comm.h"
-#include <WinSock2.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-int readpack(message *msg, SOCKET conn) {
-    char dataLen[sizeof(unsigned int)] = 0;
+message *msgJson2Struct(const char *s,) {
+    cJSON *root = cJSON_Parse(s);
 
-    int ret = recv(conn, dataLen, sizeof(dataLen), 0);
+    cJSON *itemType = cJSON_GetObjectItem(root, "type");
+    cJSON *itemData = cJSON_GetObjectItem(root, "data");
+    printf("消息类型是：%d\n", itemType->valueint);
+    printf("消息内容:%s\n", itemData->valuestring);
+
+    message msg;
+    
+}
+
+message *readpack(SOCKET conn) {
+    unsigned int dataLen = 0;
+
+    int ret = recv(conn, (char *)&dataLen, sizeof(dataLen), 0);
     if (ret > 0) {
-        printf("%d\n", len);
+        printf("%d\n", ret);
     } else if (ret == SOCKET_ERROR || ret == 0) {
         printf("%s\n", "readpack error");
-        return -1;
+        return NULL;
     }
     int len = (unsigned int)dataLen;
-    ret = recv(conn, (char *)msg, len, 0);
+    char *msgpack = (char *)calloc(sizeof(char), len);
+    message *msg=;
+    ret = recv(conn, msgpack, len, 0);
     if (ret > 0) {
         printf("%d\n", len);
+        // 从接收到的pack中的json格式字符串解析出数据
+        msg = msgJson2Struct(msgpack);
+        Free(&msgpack);
     } else if (ret == SOCKET_ERROR || ret == 0) {
         printf("%s\n", "readpack readdata error");
-        return -1;
+        Free(&msgpack);
+        return NULL;
     }
 
     return 0;
 }
 
 int sendpack(message *msg, SOCKET conn) {
-    unsigned int l = sizeof(msg->type);
-    l += strlen(msg->date);
+    cJSON *root = cJSON_CreateObject();
+    cJSON_AddItemToObject(root, "type", cJSON_CreateNumber(msg->type));
+    cJSON_AddItemToObject(root, "data", cJSON_CreateString(msg->data));
+    char *msg_str = cJSON_Print(root);
+    free(root);
 
-    char *buf = (char *)malloc(l);
-    memset(buf, 0, l);
-    memcpy(buf, *l, sizeof(unsigned int));
-    memcpy(buf, msg->type, sizeof(msg->type));
-    strcpy(buf, msg->data, strlen(msg->data));
-    int ret = send(conn, buf, l + sizeof(unsigned int));
+    unsigned int l = strlen(msg_str);
+    char *buf = calloc(sizeof(l) + l + sizeof(int), sizeof(char));
+    memcpy(buf, &l, sizeof(l));
+    strcpy(buf, msg_str);
+    free(msg_str);
+    int ret = send(conn, buf, l + sizeof(unsigned int), 0);
     if (ret == 0 || ret == SOCKET_ERROR) {
         puts("sendpack error");
+        free(buf);
+        buf = NULL;
         return -1;
     }
 
     // free(buf);
-    Free(&buf);
+    printf("before Free:%p\n", buf);
+    Free((void *)&buf);
+    printf("after Free:%p\n", buf);
+
     return 0;
 }

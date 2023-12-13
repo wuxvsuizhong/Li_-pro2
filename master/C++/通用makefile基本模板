@@ -1,0 +1,25 @@
+CC=g++
+
+# 后续从OBJS开始后续的输出文件都是自动匹配的，所以如果项目要新增源码文件，只需要在SRCS后面追加.cpp文件即可
+SRCS=main.cpp\
+    a.cpp\
+    b.cpp\
+
+#把SRCS当做一个字符串，替换其中的.cpp为.o
+OBJS=$(SRCS:.cpp=.o)   
+
+EXE=myapp
+
+start: $(OBJS)
+  $(CC) -o $(EXE) $(OBJS)
+
+# .cpp.o 这是老式的"后缀规则"，编译器会自动将.cpp识别为源文件后缀，而.o识别为输出文件后缀
+# 这种后缀规则不允许任何的依赖文件，但是也不能没有命令
+# 效果和 %.o: %.cpp 相同，区别是后者是明确了依赖为.cpp文件
+.cpp.o:
+  $(CC) -o $@ -c $<
+
+clean:
+  # rm -rf *.o
+  del *.o
+

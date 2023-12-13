@@ -1,7 +1,10 @@
 #ifndef _CONN_H
 #define _CONN_H
 
+#include "message.h"
+#include <stddef.h>
+
 int login();
-void getInputMsg(char *msgbuf, int len);
+message getInputMsg();
 
 #endif

@@ -3,6 +3,6 @@
 
 #include <stdlib.h>
 
-void Free(void *);
+void Free(void **);
 
 #endif

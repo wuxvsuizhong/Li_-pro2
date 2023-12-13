@@ -1,10 +1,10 @@
+#include "message.h"
 #include <WinSock2.h>
 #include <Windows.h>
 #include <stdio.h>
 #include <string.h>
 
 void process_conn(LPVOID conn);
-
 
 int initServer() {
     WORD wdversion = MAKEWORD(2, 2);
@@ -38,7 +38,7 @@ int initServer() {
     int naddrLen = sizeof(remoteaddr);
 
     while (1) {
-        printf("%s\n","等待客户端连接...\n");
+        printf("%s\n", "等待客户端连接...\n");
         SOCKET sclient =
             accept(slisten, (struct sockaddr *)&remoteaddr, &naddrLen);
         // char buf[8192] = {0};
@@ -49,9 +49,8 @@ int initServer() {
         puts("接收到客户端的连接！");
 
         // process_conn(sclient);
-        CreateThread(NULL,0,process_conn,(LPVOID)sclient,0,NULL);
+        CreateThread(NULL, 0, process_conn, (LPVOID)sclient, 0, NULL);
         // closesocket(sclient);
-
     }
 }
 
@@ -59,21 +58,25 @@ void process_conn(LPVOID socketfd) {
     SOCKET conn = (SOCKET)socketfd;
     char buf[8192] = {0};
     while (1) {
-        printf("%s","<<");
-        int readLen = recv(conn, buf, sizeof(buf), 0);
+        printf("%s", "<<");
+        // int readLen = recv(conn, buf, sizeof(buf), 0);
+        message msg;
+        readpack(,)
+        
+        printf("server 接收到数据长度:%d\n", readLen);
         if (readLen > 0) {
             buf[readLen] = 0;
-            printf("%s\n",buf);
-        } else if(readLen == 0 || readLen == SOCKET_ERROR){
+            printf("%s\n", buf);
+        } else if (readLen == 0 || readLen == SOCKET_ERROR) {
             puts("连接断开!");
             closesocket(conn);
             return;
         }
 
-        memset(buf, 0, sizeof(buf));
-
-        char *sendData = "你好，您已登录!";
-        send(conn, sendData, strlen(sendData), 0);
+        message retmsg;
+        retmsg.type = loginResType;
+        retmsg.data = "您好,您已登录成功!";
+        sendpack(&retmsg,conn);
     }
 }
 

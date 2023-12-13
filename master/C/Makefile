@@ -4,11 +4,11 @@ ifeq ($(OS),Windows_NT)
 	RM = del /f
 endif
 
-ifeq (, $(shell which rm))
-	$(info "no rm command in current env")
-else
-	RM = rm -f
-endif
+# ifeq (, $(shell which rm))
+# 	$(info "no rm command in current env")
+# else
+# 	RM = rm -f
+# endif
 
 
 
@@ -33,4 +33,4 @@ all:
 
 .PHOEY: clean
 clean:
-	-$(RM) *.exe
+	$(RM) *.exe

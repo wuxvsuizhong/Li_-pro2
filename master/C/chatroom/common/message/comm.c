@@ -1,7 +1,7 @@
 #include "comm.h"
 
 void Free(void **ptr) {
-    dstPtr = (*ptr);
+    void *dstPtr = (*ptr);
     free(dstPtr);
-    *prt = NULL;
+    *ptr = NULL;
 }

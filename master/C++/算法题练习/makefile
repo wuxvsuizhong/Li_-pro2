@@ -1,8 +1,16 @@
-CFLAGS= --std=c++11 -g -W -fexec-charset=GBK
+CFLAGS= -g -W -std=c++11 -fexec-charset=GBK
 RM = rm -f
 ifeq ($(OS),Windows_NT)
 	RM = del /f
 endif
+
+ifeq (, $(shell which rm))
+	$(info "no rm command in current env")
+else
+	RM = rm -f
+endif
+
+
 
 ifndef $(src)
 	src = (patsubst %*.cpp)
@@ -14,10 +22,10 @@ target:all $(targets)
 
 
 all:
-	@echo "src=${src} $(OS)"
+	@echo "src=${obj} $(OS)"
 
 
-%.o:%.cpp
+%.o:%.c
 	g++ -c $^ $(CFLAGS) -o $@
 
 %.exe:%.o
@@ -25,4 +33,4 @@ all:
 
 .PHOEY: clean
 clean:
-	$(RM) *.exe
+	-$(RM) *.exe

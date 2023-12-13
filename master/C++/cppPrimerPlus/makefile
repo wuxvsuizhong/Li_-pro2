@@ -14,7 +14,7 @@ target:all $(targets)
 
 
 all:
-	@echo "src=${src} $(OS)"
+	@echo "src=${obj} $(OS)"
 
 
 %.o:%.cpp

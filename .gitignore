@@ -1,2 +1,7 @@
 *.exe
 *.o
+master/C++/.vscode/c_cpp_properties.json
+master/C++/.vscode/settings.json
+master/C++/.vscode/tasks.json
+.vscode/c_cpp_properties.json
+.vscode/settings.json

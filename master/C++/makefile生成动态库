@@ -1,0 +1,26 @@
+CC=g++
+
+# 后续从OBJS开始后续的输出文件都是自动匹配的，所以如果项目要新增源码文件，只需要在SRCS后面追加.cpp文件即可
+SRCS=main.cpp\
+    a.cpp\
+    b.cpp\
+
+#把SRCS当做一个字符串，替换其中的.cpp为.o
+OBJS=$(SRCS:.cpp=.o)   
+
+# （linux下)需要库文件以linb开头，以.so后缀结尾
+MYLIB=libmylib.so
+
+strat:$(OBJS)
+  $(CC) -o $(MYLIB) $(OBJS) -shared
+
+.c.o:
+  $(CC) -o $@ -c  $< -fPIC
+# -fPIC的作用就是告诉编译器，生成的库文件中函数不添加偏移量，这是生成动态库文件所必须的编译选项
+
+clean:
+  # rm -rf *.o
+  del *.o
+
+
+------------
