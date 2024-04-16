@@ -1,12 +1,14 @@
-#ifndef _MYLIB_H
-#define _MYLIB_H
+#ifndef MYLIB_H
+#define MYLIB_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
+
+int max(int a, int b);
+int min(int a, int b);
+
 #ifdef __cplusplus
-int max(int a,int b);
 }
 #endif
 

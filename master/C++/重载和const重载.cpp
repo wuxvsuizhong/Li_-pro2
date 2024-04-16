@@ -46,12 +46,12 @@ int main()
 	B *pb = new B;
 	pb->go();
 	pb->A::go();
-	pb->A::go(NULL);//NULL在c++中是一个经过define的0,会调用int
-	pb->A::go(nullptr);//nullptr才是c++中的空指针
+	// pb->A::go(NULL);//NULL在c++中是一个经过define的0,会匹配int和char* 入参类型的成员函数
+	pb->A::go(nullptr);//nullptr才是c++中的空指针，会调用指针类型的成员函数
 
-	const B *ppb = new B;
+	const B *ppb = new B;    //const前置修饰的类实例，是一个常量对象
 	ppb->go();//调用const修饰的函数
-//	ppb->go(NULL);语法报错，const 限定的对象，调用的成员函数需要const修饰
+//	ppb->go(NULL);语法报错，const 限定的常量对象，调用的成员函数需要const修饰
 
 	return 0;
 }

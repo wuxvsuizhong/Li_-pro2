@@ -8,7 +8,7 @@ SRCS=main.cpp\
 #把SRCS当做一个字符串，替换其中的.cpp为.o
 OBJS=$(SRCS:.cpp=.o)   
 
-# （linux下)需要库文件以linb开头，以.so后缀结尾
+# （linux下)需要库文件以lib开头，以.so后缀结尾
 MYLIB=libmylib.so
 
 strat:$(OBJS)

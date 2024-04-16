@@ -8,7 +8,7 @@ using std::function;
 template<typename T,typename F>
 T run(T v,F f)
 {
-	static int count = 0;
+	static int count = 0;   //静态局部变量，只会初始化一次
 	count++;
 	cout<<"单个参数包装器执行"<<count<<"次"<<endl;
 	if(count > 2){

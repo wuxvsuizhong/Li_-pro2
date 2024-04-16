@@ -45,7 +45,7 @@ public:
 	}
 };
 
-class ABobj:public Aobj,public Bobj
+class ABobj:public Aobj,public Bobj   //菱形继承的尾部，多继承同时继承两个类
 {
 public:
 	ABobj(int num1,int num2):Aobj(num1),Bobj(num2)

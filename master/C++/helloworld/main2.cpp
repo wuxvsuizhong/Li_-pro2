@@ -17,7 +17,7 @@ int main()
     cout << *p2 << endl;
     delete p2;
 
-    //new 分配的内存只能用delete 释放，不能用其他的操作如delete 去释放
+    //new 分配的内存只能用delete 释放，不能用其他的操作如free 去释放
 //    ---------------------
     int *p3 = new int[5];
     for(int i=0;i<5;i++){

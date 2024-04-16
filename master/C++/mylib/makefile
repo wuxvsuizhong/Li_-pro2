@@ -1,15 +1,21 @@
 CC=g++
 
+RM=rm -f
+ifeq ($(OS),Windows_NT)
+	RM=del /f
+endif
+
 SRCS=main.cpp
 
-OBJS=$(SRCS:.cpp=.o)
+# OBJS = $(SRCS:.cpp=.o)  # 再把剩下的.cpp替换成.o
+OBJS=$(patsubst %.cpp,%.o,${SRCS})
 
-EXEC=myapp
+EXEC=myapp.exe
 
-start:$(OBJS)
-	$(CC) -o $(EXEC) $(OBJS) -L. -lmylib 
-.cpp.o:
+start: $(OBJS)
+	$(CC) $(OBJS) -o $(EXEC)  -L. -lmylib 
+.o: .cpp
 	$(CC) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJS)
+	$(RM) $(OBJS) $(EXEC)

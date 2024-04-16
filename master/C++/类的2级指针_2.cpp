@@ -45,9 +45,9 @@ void change1(demo **pp)//副本形参pp为2级指针
 	*pp = &d2;
 }
 
-void change2(demo * &p)//副本形参为指针引用
+void change2(demo * &p)//副本形参为指针引用，其实就是一个一级指针
 {
-	p = &d1;
+	p = &d1;  //把传进来的指针p修改指向d1
 }
 
 

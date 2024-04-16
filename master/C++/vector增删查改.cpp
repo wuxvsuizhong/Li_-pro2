@@ -2,8 +2,6 @@
 #include<vector>
 
 
-
-
 int main()
 {
 	std::vector<int> myvector(5);//如果分配了大小，那么默认值为0
@@ -16,14 +14,13 @@ int main()
 	myvector.pop_back();//弹出最后一个
 	myvector.insert(myvector.begin()+1,999);
 	
-	myvector.push_heap(111);
+	// myvector.push_heap(111);   vector没有push_heap操作，push_heap适用于构建堆的
 
 	for(int i = 0;i<myvector.size();i++){
 		//std::cout<<myvector[i]<<std::endl;
 		std::cout<<myvector.at(i)<<std::endl;
-
-	
 	}
+
 
 
 	return 0;

@@ -18,7 +18,7 @@ T MAX(T* t,const int n)
 }
 
 template<class NT>
-NT sum(int count,NT data1,...)//...为可变参数（n个）
+NT sum(int count,NT data1,...)//"..."为可变参数（n个）
 {
     va_list arg_ptr;//参数列表的指针
     va_start(arg_ptr,count);//限定从arg_ptr开始，限定多少个参数
